@@ -1,1 +1,5 @@
+#!/bin/sh
+PATH="/c/Program Files/nodejs/":$PATH
+. "$(dirname "$0")/_/husky.sh"
+
 npm test
