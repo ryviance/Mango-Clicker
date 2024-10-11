@@ -20,11 +20,11 @@ app.append(counterDiv);
 
 // Mango Emoji
 const button = document.createElement("button");
-button.innerHTML = "Start Game 🥭"; 
-button.style.marginTop = "20px"; 
+button.innerHTML = "Start Game 🥭";
+button.style.marginTop = "20px";
 app.append(button);
 
-button.addEventListener("click", ()=> {
-    counter++;
-    counterDiv.innerHTML = `${counter} mangoes`; 
-})
+button.addEventListener("click", () => {
+  counter++;
+  counterDiv.innerHTML = `${counter} mangoes`;
+});
