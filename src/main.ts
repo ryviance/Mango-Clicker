@@ -28,3 +28,8 @@ button.addEventListener("click", () => {
   counter++;
   counterDiv.innerHTML = `${counter} mangoes`;
 });
+
+setInterval(() => {
+    counter++;
+    counterDiv.innerHTML = `${counter} mangoes`;
+}, 1000)
