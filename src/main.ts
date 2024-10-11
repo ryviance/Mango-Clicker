@@ -20,103 +20,109 @@ counterDiv.innerHTML = `${counter} Mangoes`;
 counterDiv.style.marginTop = "20px";
 app.append(counterDiv);
 
-// Mango emoji button
-const button = document.createElement("button");
-button.innerHTML = "Click Mango 🥭";
-button.style.marginTop = "20px";
-app.append(button);
+// Growth rate display
+const growthRateDiv = document.createElement("div");
+growthRateDiv.innerHTML = `Growth Rate: ${roundToTwoDec(growthRate)} Mangoes/second`;
+growthRateDiv.style.marginTop = "20px";
+app.append(growthRateDiv);
 
-// Upgrade button (10 mango)
-let cost1: number = 10;
-const upgradeButton = document.createElement("button");
-upgradeButton.innerHTML = "Hire Farmer (" + cost1 + " 🥭)";
-upgradeButton.style.marginTop = "20px";
-upgradeButton.disabled = true; // Start disabled until player has enough mangoes
-app.append(upgradeButton);
+// Mango button click event
+const mangoButton = document.createElement("button");
+mangoButton.innerHTML = "Click Mango 🥭";
+mangoButton.style.marginTop = "20px";
+app.append(mangoButton);
 
-// Upgrade button (100 mango)
-let cost2: number = 100;
-const upgradeButton2 = document.createElement("button");
-upgradeButton2.innerHTML = "Better Mango GMO (" + cost2 + " 🥭)";
-upgradeButton2.style.marginTop = "20px";
-upgradeButton2.disabled = true; // Start disabled until player has enough mangoes
-app.append(upgradeButton2);
+mangoButton.addEventListener("click", () => {
+    counter++;
+    updateCounterDisplay();
+});
 
-// Upgrade button (1000 mango)
-let cost3: number = 1000;
-const upgradeButton3 = document.createElement("button");
-upgradeButton3.innerHTML = "Mango Factory (" + cost3 + " 🥭)";
-upgradeButton3.style.marginTop = "20px";
-upgradeButton3.disabled = true; // Start disabled until player has enough mangoes
-app.append(upgradeButton3);
+// Item interface
+
+interface Item {
+    name: string,
+    cost: number,
+    growthRate: number
+    purchaseCount: number
+}
+
+const availableItems : Item[] = [
+    {name: "Hire Farmer", cost: 10, growthRate: 0.1, purchaseCount: 0},
+    {name: "Better Mango GMO", cost: 100, growthRate: 2, purchaseCount: 0},
+    {name: "Mango Factory", cost: 1000, growthRate: 50, purchaseCount: 0},
+];
 
 // Helper function to round to 2 decimal points
 function roundToTwoDec(num: number): number {
-  return Math.round(num * 100) / 100;
+    return Math.round(num * 100) / 100;
+  }
+
+// Helper function to create upgrade buttons
+function createUpgradeButton(item: Item): HTMLButtonElement {
+    const buttonContainer = document.createElement("div");
+
+    const button = document.createElement("button");
+    button.innerHTML = `${item.name} (${item.cost} 🥭)`;
+    button.style.marginTop = "20px";
+    button.disabled = counter < item.cost;
+
+    const purchaseCountDiv = document.createElement("div");
+    purchaseCountDiv.innerHTML = `Purchased: ${item.purchaseCount}`;
+    purchaseCountDiv.style.marginTop = "5px";
+
+    buttonContainer.appendChild(button);
+    buttonContainer.appendChild(purchaseCountDiv);
+    app.append(buttonContainer);
+
+    button.addEventListener("click", () => {
+        if (counter >= item.cost) {
+            counter -= item.cost;
+            growthRate += item.growthRate; 
+            item.cost = roundToTwoDec(item.cost * 1.15); 
+            item.purchaseCount++;
+            button.innerHTML = `${item.name} (${item.cost} 🥭)`; 
+            purchaseCountDiv.innerHTML = `Purchased: ${item.purchaseCount}`;
+            updateCounterDisplay(); 
+        }
+    });
+
+    return button;
+}
+
+// Upgrade buttons
+
+const upgradeButtons: HTMLButtonElement[] = [];
+for (const item of availableItems) {
+    const button = createUpgradeButton(item);
+    upgradeButtons.push(button);
 }
 
 // Helper function to display count
 function updateCounterDisplay() {
-  counterDiv.innerHTML = `${counter.toFixed(2)} Mangoes 🥭`;
-  upgradeButton.innerHTML = "Hire Farmer (" + cost1 + " 🥭)";
-  upgradeButton2.innerHTML = "Better Mango GMO (" + cost2 + " 🥭)";
-  upgradeButton3.innerHTML = "Mango Factory (" + cost3 + " 🥭)";
-  upgradeButton.disabled = counter < cost1;
-  upgradeButton2.disabled = counter < cost2;
-  upgradeButton3.disabled = counter < cost3;
+    counterDiv.innerHTML = `${roundToTwoDec(counter)} Mangoes 🥭`;
+    growthRateDiv.innerHTML = `Production Rate: ${roundToTwoDec(growthRate)} Mangoes/second`;
+
+    // Update upgrade buttons' state
+    for (const button of upgradeButtons) {
+        const itemName = button.innerHTML.split(" (")[0]; // Extract item name from button text
+        const item = availableItems.find(item => item.name === itemName);
+        if (item) {
+            button.disabled = counter < item.cost; // Enable or disable button based on counter
+        }
+    }
 }
-
-// Mango button click event
-button.addEventListener("click", () => {
-  counter++;
-  updateCounterDisplay();
-});
-
-// Upgrade button click event
-upgradeButton.addEventListener("click", () => {
-  if (counter >= cost1) {
-    counter -= cost1;
-    growthRate += 0.1;
-    cost1 *= 1.15;
-    cost1 = roundToTwoDec(cost1);
-    updateCounterDisplay();
-  }
-});
-
-upgradeButton2.addEventListener("click", () => {
-  if (counter >= cost2) {
-    counter -= cost2;
-    growthRate += 2;
-    cost2 *= 1.15;
-    cost2 = roundToTwoDec(cost2);
-    updateCounterDisplay();
-  }
-});
-
-upgradeButton3.addEventListener("click", () => {
-  if (counter >= cost3) {
-    counter -= cost3;
-    growthRate += 50;
-    cost3 *= 1.15;
-    cost3 = roundToTwoDec(cost3);
-    updateCounterDisplay();
-  }
-});
 
 // Function to increment the counter by a fractional amount
 function animateCounter(timestamp: number) {
-  if (!lastTimestamp) lastTimestamp = timestamp;
+    if (!lastTimestamp) lastTimestamp = timestamp;
 
-  // Calculate the elapsed time since the last frame
-  const deltaTime = timestamp - lastTimestamp;
-  lastTimestamp = timestamp;
+    const deltaTime = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
 
-  // Calculate the amount to increment (1 unit per second)
-  const increment = (deltaTime / 1000) * growthRate;
-  counter += increment;
+    const increment = (deltaTime / 1000) * growthRate;
+    counter += increment;
 
-  updateCounterDisplay();
-  requestAnimationFrame(animateCounter);
+    updateCounterDisplay();
+    requestAnimationFrame(animateCounter);
 }
-
 requestAnimationFrame(animateCounter);
