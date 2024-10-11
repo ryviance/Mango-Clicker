@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Mango farm";
+const gameName = "🥭 Mango Farm";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -22,21 +22,37 @@ app.append(counterDiv);
 
 // Mango emoji button
 const button = document.createElement("button");
-button.innerHTML = "Start Game 🥭";
+button.innerHTML = "Click Mango 🥭";
 button.style.marginTop = "20px";
 app.append(button);
 
-// Upgrade button
+// Upgrade button (10 mango)
 const upgradeButton = document.createElement("button");
-upgradeButton.innerHTML = "Purchase Upgrade (10 mangoes)"; 
-upgradeButton.style.marginTop = "20px"; 
+upgradeButton.innerHTML = "Hire Farmer (10 🥭)";
+upgradeButton.style.marginTop = "20px";
 upgradeButton.disabled = true; // Start disabled until player has enough mangoes
 app.append(upgradeButton);
 
+// Upgrade button (100 mango)
+const upgradeButton2 = document.createElement("button");
+upgradeButton2.innerHTML = "Better Mango GMO (100 🥭)";
+upgradeButton2.style.marginTop = "20px";
+upgradeButton2.disabled = true; // Start disabled until player has enough mangoes
+app.append(upgradeButton2);
+
+// Upgrade button (1000 mango)
+const upgradeButton3 = document.createElement("button");
+upgradeButton3.innerHTML = "Mango Factory (1000 🥭)";
+upgradeButton3.style.marginTop = "20px";
+upgradeButton3.disabled = true; // Start disabled until player has enough mangoes
+app.append(upgradeButton3);
+
 // Helper function to display count
 function updateCounterDisplay() {
-  counterDiv.innerHTML = `${counter.toFixed(2)} mangoes`;
+  counterDiv.innerHTML = `${counter.toFixed(2)} Mangoes 🥭`;
   upgradeButton.disabled = counter < 10;
+  upgradeButton2.disabled = counter < 100;
+  upgradeButton3.disabled = counter < 1000;
 }
 
 // Mango button click event
@@ -47,12 +63,28 @@ button.addEventListener("click", () => {
 
 // Upgrade button click event
 upgradeButton.addEventListener("click", () => {
-    if (counter >= 10) {
-        counter -= 10; 
-        growthRate++; 
-        updateCounterDisplay(); 
-    }
+  if (counter >= 10) {
+    counter -= 10;
+    growthRate+= 0.1;
+    updateCounterDisplay();
+  }
 });
+
+upgradeButton2.addEventListener("click", () => {
+    if (counter >= 100) {
+      counter -= 100;
+      growthRate+= 2;
+      updateCounterDisplay();
+    }
+  });
+
+  upgradeButton3.addEventListener("click", () => {
+    if (counter >= 1000) {
+      counter -= 1000;
+      growthRate+= 50;
+      updateCounterDisplay();
+    }
+  });
 
 // Function to increment the counter by a fractional amount
 function animateCounter(timestamp: number) {
