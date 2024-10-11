@@ -29,7 +29,7 @@ app.append(button);
 // Upgrade button (10 mango)
 let cost1: number = 10;
 const upgradeButton = document.createElement("button");
-upgradeButton.innerHTML = "Hire Farmer ("+cost1+" 🥭)";
+upgradeButton.innerHTML = "Hire Farmer (" + cost1 + " 🥭)";
 upgradeButton.style.marginTop = "20px";
 upgradeButton.disabled = true; // Start disabled until player has enough mangoes
 app.append(upgradeButton);
@@ -37,7 +37,7 @@ app.append(upgradeButton);
 // Upgrade button (100 mango)
 let cost2: number = 100;
 const upgradeButton2 = document.createElement("button");
-upgradeButton2.innerHTML = "Better Mango GMO ("+cost2+" 🥭)";
+upgradeButton2.innerHTML = "Better Mango GMO (" + cost2 + " 🥭)";
 upgradeButton2.style.marginTop = "20px";
 upgradeButton2.disabled = true; // Start disabled until player has enough mangoes
 app.append(upgradeButton2);
@@ -45,22 +45,22 @@ app.append(upgradeButton2);
 // Upgrade button (1000 mango)
 let cost3: number = 1000;
 const upgradeButton3 = document.createElement("button");
-upgradeButton3.innerHTML = "Mango Factory ("+cost3+" 🥭)";
+upgradeButton3.innerHTML = "Mango Factory (" + cost3 + " 🥭)";
 upgradeButton3.style.marginTop = "20px";
 upgradeButton3.disabled = true; // Start disabled until player has enough mangoes
 app.append(upgradeButton3);
 
 // Helper function to round to 2 decimal points
 function roundToTwoDec(num: number): number {
-    return Math.round(num*100)/100;
+  return Math.round(num * 100) / 100;
 }
 
 // Helper function to display count
 function updateCounterDisplay() {
   counterDiv.innerHTML = `${counter.toFixed(2)} Mangoes 🥭`;
-  upgradeButton.innerHTML = "Hire Farmer ("+cost1+" 🥭)";
-  upgradeButton2.innerHTML = "Better Mango GMO ("+cost2+" 🥭)";
-  upgradeButton3.innerHTML = "Mango Factory ("+cost3+" 🥭)";
+  upgradeButton.innerHTML = "Hire Farmer (" + cost1 + " 🥭)";
+  upgradeButton2.innerHTML = "Better Mango GMO (" + cost2 + " 🥭)";
+  upgradeButton3.innerHTML = "Mango Factory (" + cost3 + " 🥭)";
   upgradeButton.disabled = counter < cost1;
   upgradeButton2.disabled = counter < cost2;
   upgradeButton3.disabled = counter < cost3;
