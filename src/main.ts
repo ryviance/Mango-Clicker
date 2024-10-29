@@ -13,7 +13,7 @@ if (!app) {
 document.title = config.gameTitle;
 
 const header = document.createElement("h1");
-header.innerHTML = gameName;
+header.innerHTML = config.gameTitle;
 app.append(header);
 
 // Counter
