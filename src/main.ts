@@ -1,12 +1,16 @@
 import "./style.css";
 
+// Define configuration for game
+const config = {
+    gameTitle: "🥭 Mango Farm"
+};
+
 const app = document.querySelector("#app");
 if (!app) {
     throw new Error("App root element not found.");
 }
 
-const gameName = "🥭 Mango Farm";
-document.title = gameName;
+document.title = config.gameTitle;
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
