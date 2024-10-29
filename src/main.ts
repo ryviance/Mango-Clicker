@@ -1,6 +1,9 @@
 import "./style.css";
 
-const app: HTMLDivElement = document.querySelector("#app")!;
+const app = document.querySelector("#app");
+if (!app) {
+    throw new Error("App root element not found.");
+}
 
 const gameName = "🥭 Mango Farm";
 document.title = gameName;
