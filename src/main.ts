@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.css"; 
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -35,6 +35,20 @@ app.append(mangoButton);
 mangoButton.addEventListener("click", () => {
   counter++;
   updateCounterDisplay();
+
+  // Create the mango animation element
+  const mangoAnimation = document.createElement("div");
+  mangoAnimation.innerHTML = "🥭";
+  mangoAnimation.className = "mango-animation";
+
+  // Position the animation element near the button
+  const buttonRect = mangoButton.getBoundingClientRect();
+  mangoAnimation.style.left = `${buttonRect.left + buttonRect.width / 2}px`;
+  mangoAnimation.style.top = `${buttonRect.top}px`;
+
+  // Append the animation element to the body and remove it after animation ends
+  document.body.appendChild(mangoAnimation);
+  setTimeout(() => mangoAnimation.remove(), 1000); // Remove after 1 second
 });
 
 // Item interface
