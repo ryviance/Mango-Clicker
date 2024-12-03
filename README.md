@@ -1,1 +1,3 @@
-This is the starter code project for the `Demo 1` project in CMPM 121, Game Design Patterns, at UC Santa Cruz (fall quarter, 2024). Students should incrementally modify this project, tracking their progress wit git, to develop an incremental game of their own unique design.
+An idle mango 🥭 clicking game inspired by Cookie Clicker.
+
+![image](https://github.com/user-attachments/assets/31dd1459-3e2e-49e2-b7a0-3806930b6c0c)
